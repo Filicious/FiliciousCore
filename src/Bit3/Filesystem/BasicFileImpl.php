@@ -46,25 +46,6 @@ abstract class BasicFileImpl implements File
     }
 
     /**
-     * Get the type of this file.
-     *
-     * @return "file"|"directory"|"link"|"unknown"
-     */
-    public function getType()
-    {
-        if ($this->isLink()) {
-            return 'link';
-        }
-        if ($this->isFile()) {
-            return 'file';
-        }
-        if ($this->isDirectory()) {
-            return 'directory';
-        }
-        return 'unknown';
-    }
-
-    /**
      * Get the name of the file or directory.
      *
      * @return string
