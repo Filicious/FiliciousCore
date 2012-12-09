@@ -75,16 +75,6 @@ class MergedFile
         return $this->file->isDirectory();
     }
 
-    /**
-     * Get the type of this file.
-     *
-     * @return "file"|"directory"|"link"|"unknown"
-     */
-    public function getType()
-    {
-        return $this->file->getType();
-    }
-
     public function getPathname()
     {
         return $this->mount . $this->file->getPathname();

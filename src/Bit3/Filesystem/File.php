@@ -114,13 +114,6 @@ interface File
     public function isDirectory();
 
     /**
-     * Get the type of this file.
-     *
-     * @return "file"|"directory"|"link"|"unknown"
-     */
-    public function getType();
-
-    /**
      * Returns the absolute pathname.
      *
      * @return string

@@ -79,11 +79,6 @@ class VirtualFile
         return false;
     }
 
-    public function getType()
-    {
-        return 'dir';
-    }
-
     public function getPathname()
     {
         return $this->parentPath . '/' . $this->fileName;
