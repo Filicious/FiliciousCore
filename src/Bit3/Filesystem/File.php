@@ -79,32 +79,39 @@ interface File
      * List recursive.
      */
     const LIST_RECURSIVE = 8192;
-
+    
     /**
-     * Get the underlaying filesystem for this pathname.
+     * Returns the underlying filesystem to which the file denoted by
+     * this abstract pathname belongs to.
      *
-     * @return Filesystem
+     * @return Filesystem The filesystem of the file
      */
     public function getFilesystem();
-
+    
     /**
-     * Test whether this pathname is a file.
+     * Tests whether the file denoted by this abstract pathname is a file.
      *
-     * @return bool
+     * @return bool <em>true</em> if and only if the file denoted by
+     * 		this abstract pathname exists and is a file;
+     * 		<em>false</em> otherwise
      */
     public function isFile();
-
+    
     /**
-     * Test whether this pathname is a link.
+     * Tests whether the file denoted by this abstract pathname is a link.
      *
-     * @return bool
+     * @return bool <em>true</em> if and only if the file denoted by
+     * 		this abstract pathname exists and is a link;
+     * 		<em>false</em> otherwise
      */
     public function isLink();
-
+    
     /**
-     * Test whether this pathname is a directory.
+     * Tests whether the file denoted by this abstract pathname is a directory.
      *
-     * @return bool
+     * @return bool <em>true</em> if and only if the file denoted by
+     * 		this abstract pathname exists and is a directory;
+     * 		<em>false</em> otherwise
      */
     public function isDirectory();
 
@@ -114,25 +121,42 @@ interface File
      * @return int Type bitmask
      */
     public function getType();
-
+    
     /**
-     * Returns the absolute pathname.
+     * Converts this abstract pathname into the canonical pathname string.
      *
-     * @return string
+     * TODO define canonical pathname: variants: with system dependant directory
+     * delimiter or with UNIX directory delimiter "/"
+     *
+     * @return string The canonical absolute pathname as a string.
      */
     public function getPathname();
-
+    
     /**
      * Get the link target of the link.
+     *
+     * TODO documentation
+     * TODO OH: should return a file object?
      *
      * @return string
      */
     public function getLinkTarget();
-
+    
     /**
-     * Get the name of the file or directory.
+     * Extracts the basename of this abstract pathname, which is just
+     * the last name in the pathname's name sequence. If the pathname's
+     * name sequence is empty, then the empty string is returned.
      *
-     * @return string
+     * Additionally you can supply a suffix, which will be truncated off of
+     * the end of the basename, if found. For example if you pass <em>.md</em>
+     * and the original basename is <em>README.md</em>, only <em>README</em> is
+     * returned.
+     *
+     * @param string $suffix The suffix to trancate off of the end of
+     * 		the basename.
+     *
+     * @return string The basename of this abstract pathname or the empty string
+     * 		if this pathname's name sequence is empty
      */
     public function getBasename($suffix = '');
 
