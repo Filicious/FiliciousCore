@@ -15,6 +15,7 @@ namespace Filicious\Mountcontainer;
 
 use Filicious\File;
 use Filicious\Filesystem;
+use Filicious\FilesystemConfig;
 use Filicious\AbstractSimpleFilesystem;
 use Filicious\FilesystemException;
 use Filicious\Util;
@@ -29,18 +30,12 @@ use Filicious\Util;
 class MountcontainerFilesystem
 	extends AbstractSimpleFilesystem
 {
-	/**
-	 * @var string The name of the config class used by instances of this
-	 *         filesystem implementation. Override in concrete classes to specify
-	 *         another config class.
-	 */
-	const CONFIG_CLASS = 'Filicious\Mountcontainer\MountcontainerFilesystemConfig';
 
 	protected $mounts;
 
 	protected $map;
 
-	public function __construct(MountcontainerFilesystemConfig $config, PublicURLProvider $provider = null)
+	public function __construct(FilesystemConfig $config, PublicURLProvider $provider = null)
 	{
 		parent::__construct($config, $provider);
 

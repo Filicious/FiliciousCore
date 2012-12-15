@@ -23,17 +23,37 @@ namespace Filicious;
 interface Filesystem
 {
 	/**
-	 * @param FilesystemConfig $config
-	 *
-	 * @return Filesystem
-	 * @throws FilesystemException
+	 * Create a new empty config with the filesystem implementation parameter is
+	 * set to the called class name.
+	 * 
+	 * @param \Traversable|array $data The data to merge in in the new config
+	 * @return FilesystemConfig The newly create config
+	 * @throws \LogicException When this method is called from
+	 * 		a non-instantiable class
 	 */
-	public static function create(FilesystemConfig $config, PublicURLProvider $provider = null);
+	public static function newConfig($data = null);
 
 	/**
-	 * @return FilesystemConfig
+	 * Get the config used by this filesystem.
+	 * 
+	 * @return FilesystemConfig The config of this filesystem
 	 */
 	public function getConfig();
+	
+	/**
+	 * Notify this filesystem that the given param should change to the given
+	 * value.
+	 * 
+	 * <strong>THIS METHOD SHOULD ONLY BE CALLED FROM WITHIN
+	 * A <em>FilesystemConfig</em>!</strong>
+	 * 
+	 * @param array $data The internal key value storage of the config object
+	 * @param string $param The parameter to change
+	 * @param mixed $value The new value to set
+	 * @return void
+	 * @throws ConfigurationException
+	 */
+	public function notify(array &$data, $param, $value);
 
 	/**
 	 * Get the root (/) file node.

@@ -25,33 +25,18 @@ use \Exception;
 abstract class AbstractFilesystem
 	implements Filesystem
 {
-	/**
-	 * @var string The name of the config class used by instances of this
-	 *         filesystem implementation. Override in concrete classes to specify
-	 *         another config class.
-	 */
-	const CONFIG_CLASS = 'FilesystemConfig';
 	
 	/* (non-PHPdoc)
-	 * @see Filicious.Filesystem::create()
-	*/
-	public static function create(FilesystemConfig $config, PublicURLProvider $provider = null)
-	{
-		// the instanceof operator has lexer issues...
-		if (!is_a($config, static::CONFIG_CLASS)) {
-			throw new FilesystemException(sprintf(
-				'%s requires a config of type %s, given %s',
-				get_called_class(),
-				static::CONFIG_CLASS,
-				get_class($config)
-			));
-		}
-
-		$args  = func_get_args();
+	 * @see Filicious.Filesystem::newConfig()
+	 */
+	public static function newConfig($data = null) {
 		$clazz = new \ReflectionClass(get_called_class());
-		return $clazz->newInstanceArgs($args);
+		if(!$clazz->isInstantiable()) {
+			throw new LogicException(); // TODO
+		}
+		return FilesystemConfig::newConfig($data)->setImplementation($clazz->getName());
 	}
-
+	
 	/**
 	 * @var FilesystemConfig
 	 */
@@ -67,10 +52,8 @@ abstract class AbstractFilesystem
 	 */
 	protected function __construct(FilesystemConfig $config, PublicURLProvider $provider = null)
 	{
-		$this->config   = clone $config;
 		$this->provider = $provider;
-		$this->prepareConfig();
-		$this->config->makeImmutable();
+		$this->config = $this->prepareConfig($config->fork())->bind($this);
 	}
 
 	/* (non-PHPdoc)
@@ -80,14 +63,20 @@ abstract class AbstractFilesystem
 	{
 		return $this->config;
 	}
+	
+	public function notify(array &$data, $param, $value)
+	{
+		throw new Exception();//InvalidStateException(); // TODO
+	}
 
 	/**
 	 * Gets called before at construction time before the config is made
 	 * immutable. Override in concrete classes to extend or alter behavior.
 	 */
-	protected function prepareConfig()
+	protected function prepareConfig(FilesystemConfig $config)
 	{
-		$this->config->setBasePath(Util::normalizePath($this->config->getBasePath()) . '/');
+		$config->setBasePath(Util::normalizePath($config->getBasePath()));
+		return $config;
 	}
 
 	/* (non-PHPdoc)
@@ -105,4 +94,5 @@ abstract class AbstractFilesystem
 	{
 		$this->provider = $provider;
 	}
+	
 }
