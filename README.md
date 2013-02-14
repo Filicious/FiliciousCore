@@ -340,7 +340,7 @@ if ($file->isDirectory()) {
 	$iterator = new FilesystemIterator($file, FilesystemIterator::CURRENT_AS_PATHNAME);
 
 	/** @var string $child */
-	foreach ($file as $child) {
+	foreach ($iteratoriterated hear as $child) {
 		// $child will be the pathname
 	}
 }
