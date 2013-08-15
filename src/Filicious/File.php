@@ -584,35 +584,21 @@ class File
 		return $this->pathname->rootAdapter()->getStreamURL($this->pathname);
 	}
 
-	/**
-	 * Get the mime name (e.g. "OpenDocument Text") of the file.
-	 *
-	 * @return string
-	 */
-	public function getMIMEName()
-	{
-		return $this->pathname->rootAdapter()->getMIMEName($this->pathname);
-	}
-
-	/**
-	 * Get the mime type (e.g. "application/vnd.oasis.opendocument.text") of the file.
-	 *
-	 * @return string
-	 */
-	public function getMIMEType()
-	{
-		return $this->pathname->rootAdapter()->getMIMEType($this->pathname);
-	}
-
-	/**
-	 * Get the mime encoding (e.g. "binary" or "us-ascii" or "utf-8") of the file.
-	 *
-	 * @return string
-	 */
-	public function getMIMEEncoding()
-	{
-		return $this->pathname->rootAdapter()->getMIMEEncoding($this->pathname);
-	}
+    /**
+     * Get mime properties of the file.
+     * @param string $property
+     * @return string
+     */
+    public function getMIME($property) {
+        switch($property) {
+            case 'name':
+                return $this->pathname->rootAdapter()->getMIMEName($this->pathname);
+            case 'type':
+                return $this->pathname->rootAdapter()->getMIMEName($this->pathname);
+            case 'encoding':
+                return $this->pathname->rootAdapter()->getMIMEEncoding($this->pathname);
+        }
+    }
 
     /**
      * Get the hash of the file.
@@ -628,8 +614,6 @@ class File
             case 'sha1':
                 return $this->pathname->rootAdapter()->getSHA1($this->pathname, $raw);
         }
-
-        return false;
     }
 
 	/**
