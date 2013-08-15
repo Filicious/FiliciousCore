@@ -623,38 +623,14 @@ class File
     public function getHash($algo, $raw = false) {
         switch ($algo) {
             case 'md5':
-                return $this->getMD5($raw);
+                return $this->pathname->rootAdapter()->getMD5($this->pathname, $raw);
 
             case 'sha1':
-                return $this->getSHA1($raw);
+                return $this->pathname->rootAdapter()->getSHA1($this->pathname, $raw);
         }
 
         return false;
     }
-
-    /**
-	 * Get the md5 hash of the file.
-	 *
-	 * @param bool $raw
-	 *
-	 * @return string
-	 */
-	public function getMD5($raw = false)
-	{
-		return $this->pathname->rootAdapter()->getMD5($this->pathname, $raw);
-	}
-
-	/**
-	 * Get the sha1 hash of the file.
-	 *
-	 * @param bool $raw
-	 *
-	 * @return string
-	 */
-	public function getSHA1($raw = false)
-	{
-		return $this->pathname->rootAdapter()->getSHA1($this->pathname, $raw);
-	}
 
 	/**
 	 * List all children of this directory.
