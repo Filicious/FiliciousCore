@@ -614,7 +614,25 @@ class File
 		return $this->pathname->rootAdapter()->getMIMEEncoding($this->pathname);
 	}
 
-	/**
+    /**
+     * Get the hash of the file.
+     * @param string $algo
+     * @param bool $raw
+     * @return string
+     */
+    public function getHash($algo, $raw = false) {
+        switch ($algo) {
+            case 'md5':
+                return $this->getMD5($raw);
+
+            case 'sha1':
+                return $this->getSHA1($raw);
+        }
+
+        return false;
+    }
+
+    /**
 	 * Get the md5 hash of the file.
 	 *
 	 * @param bool $raw
